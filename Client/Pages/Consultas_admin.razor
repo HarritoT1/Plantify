@@ -1,0 +1,814 @@
+  @page "/Admin/{table}/{idquery?}" 
+  @using Plantify.Client.Services;
+
+  @inject IQueryService queryService;
+
+<div class="bg-dark">
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path
+            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+        </symbol>
+        <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path
+            d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+            <path
+            d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path
+            d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+        </symbol>
+    </svg>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+        <button class="btn btn-outline-success buttonAnimation py-2 dropdown-toggle d-flex align-items-center" id="bd-theme"
+        type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+            <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+                <use href="#circle-half"></use>
+            </svg>
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center buttonAnimation"
+                data-bs-theme-value="light" aria-pressed="false">
+                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                        <use href="#sun-fill"></use>
+                    </svg>
+                    Light
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center buttonAnimation" data-bs-theme-value="dark"
+                aria-pressed="false">
+                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                        <use href="#moon-stars-fill"></use>
+                    </svg>
+                    Dark
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center active buttonAnimation"
+                data-bs-theme-value="auto" aria-pressed="true">
+                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
+                        <use href="#circle-half"></use>
+                    </svg>
+                    Auto
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="calendar3" viewBox="0 0 16 16">
+            <path
+            d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
+            <path
+            d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+        </symbol>
+        <symbol id="chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+        </symbol>
+        <symbol id="door-closed" viewBox="0 0 16 16">
+            <g fill="white">
+                <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z" />
+                <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z" />
+            </g>
+        </symbol>
+        <symbol id="list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+        </symbol>
+        <symbol id="people" viewBox="0 0 16 16">
+            <g fill="white">
+                <path
+                d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+            </g>
+        </symbol>
+        <symbol id="clientes" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        viewBox="0 0 512 512">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white" stroke="none">
+                <path d="M2370 4954 c-335 -31 -677 -140 -930 -297 -225 -140 -431 -357 -533
+-562 -106 -214 -133 -475 -74 -706 128 -495 634 -901 1277 -1023 47 -9 95 -19
+107 -21 14 -3 50 -47 104 -127 96 -144 121 -173 171 -199 47 -24 89 -24 136 0
+50 26 75 55 171 199 55 80 90 124 104 127 12 2 72 14 132 25 234 46 501 156
+700 288 66 43 142 107 221 186 179 177 277 338 331 545 36 132 38 352 6 482
+-92 368 -384 690 -803 887 -281 132 -542 190 -880 196 -107 2 -215 2 -240 0z
+m401 -164 c675 -68 1207 -428 1356 -917 23 -78 26 -104 26 -233 0 -129 -3
+-155 -27 -235 -130 -429 -568 -768 -1136 -881 -69 -13 -135 -27 -148 -29 -40
+-9 -100 -75 -176 -189 -40 -61 -80 -117 -89 -125 -24 -19 -38 -5 -115 113 -74
+114 -131 179 -170 194 -15 6 -79 20 -142 32 -576 107 -1024 450 -1157 887 -23
+78 -26 104 -26 233 0 129 3 155 26 233 75 246 236 451 485 618 349 234 831
+345 1293 299z" />
+                <path d="M2494 4361 c-23 -10 -52 -34 -65 -52 -22 -31 -25 -47 -29 -169 -5
+-117 -9 -141 -29 -182 -27 -52 -12 -46 -205 -84 -72 -14 -91 -15 -94 -4 -3 7
+-13 21 -23 31 -17 17 -37 19 -209 19 -189 0 -191 0 -215 -25 l-25 -24 0 -431
+0 -431 25 -24 c24 -25 26 -25 215 -25 204 0 204 0 236 55 10 18 29 17 580 -19
+639 -43 614 -44 669 29 27 35 30 51 73 387 25 201 41 364 38 384 -8 42 -50 93
+-93 110 -24 10 -88 14 -247 14 l-214 0 -4 133 c-3 123 -5 135 -31 179 -39 67
+-85 98 -185 125 -104 28 -115 28 -168 4z m204 -197 c21 -24 22 -33 22 -190 0
+-162 0 -165 25 -189 l24 -25 256 0 256 0 -6 -32 c-3 -18 -21 -161 -40 -318
+-20 -156 -37 -285 -38 -286 -1 -2 -253 14 -560 34 l-557 37 0 250 0 250 173
+33 c94 18 180 38 190 43 9 6 40 55 67 109 l50 100 0 119 0 119 58 -14 c35 -9
+66 -25 80 -40z m-778 -724 l0 -320 -80 0 -80 0 0 320 0 320 80 0 80 0 0 -320z" />
+                <path d="M1003 1825 c-177 -48 -317 -195 -354 -372 -24 -117 5 -258 75 -362
+l33 -48 -70 -6 c-141 -12 -260 -94 -325 -225 l-37 -76 -3 -288 -3 -288 80 0
+81 0 0 256 c0 172 4 270 12 298 16 55 99 138 154 154 58 17 890 17 948 0 55
+-16 138 -99 154 -154 8 -28 12 -126 12 -298 l0 -256 80 0 80 0 0 256 c0 172 4
+270 12 298 16 55 99 138 154 154 58 17 890 17 948 0 55 -16 138 -99 154 -154
+8 -28 12 -126 12 -298 l0 -256 80 0 80 0 0 256 c0 172 4 270 12 298 16 55 99
+138 154 154 58 17 890 17 948 0 55 -16 138 -99 154 -154 8 -28 12 -126 12
+-298 l0 -256 81 0 80 0 -3 287 -3 288 -32 67 c-64 136 -186 223 -329 235 l-71
+6 33 48 c130 194 103 452 -64 611 -192 183 -472 183 -664 0 -167 -159 -194
+-417 -64 -611 l33 -48 -70 -6 c-87 -7 -177 -48 -241 -109 l-46 -45 -46 45
+c-64 61 -154 102 -241 109 l-70 6 33 48 c130 194 103 452 -64 611 -192 183
+-472 183 -664 0 -167 -159 -194 -417 -64 -611 l33 -48 -70 -6 c-87 -7 -177
+-48 -241 -109 l-46 -45 -46 45 c-64 61 -154 102 -241 109 l-70 6 33 48 c186
+277 42 649 -283 734 -70 18 -161 18 -230 0z m268 -186 c67 -36 98 -68 137
+-143 22 -43 26 -64 26 -136 1 -78 -2 -90 -33 -148 -38 -70 -70 -100 -145 -140
+-43 -22 -64 -26 -136 -26 -72 0 -93 4 -136 26 -75 40 -107 70 -145 140 -31 58
+-34 70 -33 148 0 100 24 160 89 225 100 100 249 121 376 54z m1440 0 c67 -36
+98 -68 137 -143 22 -43 26 -64 26 -136 1 -78 -2 -90 -33 -148 -38 -70 -70
+-100 -145 -140 -43 -22 -64 -26 -136 -26 -72 0 -93 4 -136 26 -75 40 -107 70
+-145 140 -31 58 -34 70 -33 148 0 100 24 160 89 225 100 100 249 121 376 54z
+m1440 0 c67 -36 98 -68 137 -143 22 -43 26 -64 26 -136 1 -78 -2 -90 -33 -148
+-38 -70 -70 -100 -145 -140 -43 -22 -64 -26 -136 -26 -72 0 -93 4 -136 26 -75
+40 -107 70 -145 140 -31 58 -34 70 -33 148 0 100 24 160 89 225 100 100 249
+121 376 54z" />
+                <path d="M640 400 l0 -240 80 0 80 0 0 240 0 240 -80 0 -80 0 0 -240z" />
+                <path d="M1440 400 l0 -240 80 0 80 0 0 240 0 240 -80 0 -80 0 0 -240z" />
+                <path d="M2080 400 l0 -240 80 0 80 0 0 240 0 240 -80 0 -80 0 0 -240z" />
+                <path d="M2880 400 l0 -240 80 0 80 0 0 240 0 240 -80 0 -80 0 0 -240z" />
+                <path d="M3520 400 l0 -240 80 0 80 0 0 240 0 240 -80 0 -80 0 0 -240z" />
+                <path d="M4320 400 l0 -240 80 0 80 0 0 240 0 240 -80 0 -80 0 0 -240z" />
+            </g>
+        </symbol>
+        <symbol id="pedidos" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        viewBox="0 0 512 512">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white" stroke="none">
+                <path d="M105 5015 l-25 -24 0 -2111 0 -2111 25 -24 24 -25 616 0 615 0 0
+-295 0 -296 25 -24 24 -25 1791 0 1791 0 24 25 25 24 0 751 0 751 -25 24 c-24
+25 -24 25 -240 25 l-215 0 0 615 0 616 -25 24 -24 25 -536 0 -535 0 0 1015 0
+1016 -25 24 -24 25 -1631 0 -1631 0 -24 -25z m3175 -1095 l0 -960 -215 0
+c-216 0 -216 0 -240 -25 -24 -23 -25 -29 -25 -160 l0 -135 -720 0 -720 0 0
+-80 0 -80 720 0 720 0 0 -80 0 -80 -720 0 -720 0 0 -80 0 -80 720 0 720 0 0
+-240 0 -240 -695 0 -696 0 -24 -25 -25 -24 0 -376 0 -375 -560 0 -560 0 0
+2000 0 2000 1520 0 1520 0 0 -960z m160 -1335 c0 -286 -19 -265 240 -265 259
+0 240 -21 240 265 l0 215 240 0 240 0 0 -560 0 -560 -720 0 -720 0 0 560 0
+560 240 0 240 0 0 -215z m320 55 l0 -160 -80 0 -80 0 0 160 0 160 80 0 80 0 0
+-160z m-1760 -1335 c0 -216 0 -216 25 -240 l24 -25 271 0 271 0 24 25 c25 24
+25 24 25 240 l0 215 240 0 240 0 0 -640 0 -640 -800 0 -800 0 0 640 0 640 240
+0 240 0 0 -215z m480 55 l0 -160 -160 0 -160 0 0 160 0 160 160 0 160 0 0
+-160z m1280 -55 c0 -216 0 -216 25 -240 l24 -25 271 0 271 0 24 25 c25 24 25
+24 25 240 l0 215 240 0 240 0 0 -640 0 -640 -800 0 -800 0 0 640 0 640 240 0
+240 0 0 -215z m480 55 l0 -160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 -160z" />
+                <path d="M1150 4785 l-64 -65 -319 0 -318 0 -24 -25 -25 -24 0 -351 0 -351 25
+-24 24 -25 351 0 351 0 24 25 25 24 0 318 0 319 65 64 c36 35 65 69 65 75 0
+13 -92 105 -106 105 -5 0 -39 -29 -74 -65z" />
+                <path d="M1360 4480 l0 -80 880 0 880 0 0 80 0 80 -880 0 -880 0 0 -80z" />
+                <path d="M1360 4160 l0 -80 880 0 880 0 0 80 0 80 -880 0 -880 0 0 -80z" />
+                <path d="M425 3735 l-25 -24 0 -351 0 -351 25 -24 24 -25 351 0 351 0 24 25
+25 24 0 351 0 351 -25 24 -24 25 -351 0 -351 0 -24 -25z" />
+                <path d="M1360 3520 l0 -80 880 0 880 0 0 80 0 80 -880 0 -880 0 0 -80z" />
+                <path d="M1360 3200 l0 -80 880 0 880 0 0 80 0 80 -880 0 -880 0 0 -80z" />
+                <path d="M1150 2865 l-64 -65 -319 0 -318 0 -24 -25 -25 -24 0 -351 0 -351 25
+-24 24 -25 351 0 351 0 24 25 25 24 0 318 0 319 65 64 c36 35 65 69 65 75 0
+13 -92 105 -106 105 -5 0 -39 -29 -74 -65z" />
+                <path d="M425 1815 l-25 -24 0 -351 0 -351 25 -24 24 -25 351 0 351 0 24 25
+25 24 0 351 0 351 -25 24 -24 25 -351 0 -351 0 -24 -25z" />
+                <path d="M3920 1920 l0 -80 160 0 160 0 0 80 0 80 -160 0 -160 0 0 -80z" />
+                <path d="M2640 800 l0 -80 160 0 160 0 0 80 0 80 -160 0 -160 0 0 -80z" />
+                <path d="M2640 480 l0 -80 160 0 160 0 0 80 0 80 -160 0 -160 0 0 -80z" />
+                <path d="M4400 800 l0 -80 160 0 160 0 0 80 0 80 -160 0 -160 0 0 -80z" />
+                <path d="M4400 480 l0 -80 160 0 160 0 0 80 0 80 -160 0 -160 0 0 -80z" />
+            </g>
+        </symbol>
+        <symbol id="detalles" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        viewBox="0 0 512 512">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white" stroke="none">
+                <path d="M1087 4786 c-58 -21 -103 -61 -131 -118 l-26 -52 0 -1684 c0 -1058 4
+-1690 10 -1701 5 -10 23 -24 39 -31 37 -15 79 2 98 40 10 20 13 367 13 1688
+l0 1663 25 24 24 25 1419 0 c1383 0 1420 0 1443 -19 l24 -19 5 -672 5 -672 24
+-19 c32 -26 82 -25 109 4 l22 23 0 675 c0 756 3 716 -75 792 -74 72 31 67
+-1559 67 -1169 -1 -1438 -3 -1469 -14z" />
+                <path d="M2120 4225 c-260 -114 -452 -204 -462 -216 -17 -20 -18 -61 -18 -541
+0 -341 4 -526 10 -539 14 -25 873 -449 911 -449 24 0 182 78 800 396 64 33 90
+52 97 72 16 42 27 1024 12 1052 -13 24 -38 36 -540 267 -173 79 -326 146 -340
+148 -17 3 -168 -58 -470 -190z m783 -122 c163 -75 297 -140 297 -143 0 -7
+-219 -111 -232 -110 -10 0 -579 312 -576 315 14 14 186 83 198 79 8 -3 149
+-66 313 -141z m-405 -182 c155 -85 282 -157 282 -161 0 -4 -50 -30 -110 -58
+l-110 -52 -320 153 c-175 83 -316 155 -312 159 15 15 257 117 272 115 9 -1
+143 -71 298 -156z m-353 -250 l330 -158 3 -411 c1 -227 1 -412 -2 -412 -2 0
+-155 74 -340 165 l-336 164 0 406 c0 223 3 405 8 404 4 0 156 -71 337 -158z
+m1169 -238 c-4 -219 -9 -401 -13 -404 -6 -7 -651 -339 -658 -339 -1 0 -3 184
+-3 410 l0 410 123 58 122 58 7 -35 c4 -20 7 -64 7 -97 1 -80 25 -114 81 -114
+30 0 43 6 60 28 21 26 22 33 15 162 l-7 136 128 61 c71 34 132 62 137 62 4 1
+4 -178 1 -396z" />
+                <path d="M4051 3024 c-21 -27 -21 -32 -21 -870 l0 -844 -289 0 c-282 0 -289 0
+-321 -22 -18 -13 -43 -36 -54 -51 -20 -27 -21 -41 -24 -393 l-3 -364 -1100 0
+-1100 0 -24 25 c-25 24 -25 24 -25 240 0 263 -7 285 -89 285 -16 0 -37 -10
+-50 -24 -22 -23 -22 -27 -19 -273 l3 -250 30 -49 c19 -30 49 -60 79 -79 l49
+-30 1156 -3 c636 -1 1170 0 1187 3 27 5 84 68 393 441 l361 435 0 903 0 903
+-23 21 c-34 32 -89 30 -116 -4z m-307 -2111 c-108 -131 -207 -249 -220 -263
+l-24 -25 0 263 0 262 220 0 220 0 -196 -237z" />
+                <path d="M1554 2178 c-47 -22 -56 -86 -19 -123 l24 -25 544 0 544 0 21 23 c27
+29 28 77 3 108 l-19 24 -539 2 c-359 1 -545 -2 -559 -9z" />
+                <path d="M2910 2183 c-54 -20 -69 -92 -27 -131 23 -22 28 -22 349 -22 362 0
+361 0 374 67 5 27 1 37 -24 63 l-30 30 -314 -1 c-172 0 -320 -3 -328 -6z" />
+                <path d="M1531 1594 c-28 -35 -26 -67 3 -101 l24 -28 1002 0 1002 0 24 28 c29
+34 31 66 3 101 l-20 26 -1009 0 -1009 0 -20 -26z" />
+                <path d="M1541 1043 c-11 -10 -24 -32 -27 -50 -5 -27 -1 -37 24 -63 l30 -30
+704 0 c767 0 736 -2 758 56 11 28 -2 71 -28 90 -14 11 -161 13 -728 14 -663 0
+-713 -1 -733 -17z" />
+            </g>
+        </symbol>
+        <symbol id="productos" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        viewBox="0 0 512 512">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white" stroke="none">
+                <path d="M1382 5077 c-106 -40 -169 -189 -142 -338 28 -154 119 -313 266 -468
+46 -49 84 -91 84 -94 0 -2 -37 -28 -82 -57 -321 -207 -405 -273 -474 -376 -20
+-32 -45 -84 -56 -117 -18 -57 -18 -123 -16 -1676 l3 -1616 27 -57 c31 -66 105
+-149 163 -183 93 -55 55 -53 1367 -56 1127 -2 1218 -1 1283 16 196 49 313 158
+345 320 16 88 9 3213 -8 3273 -22 76 -55 136 -102 183 -25 25 -153 116 -284
+203 l-238 158 79 81 c44 45 98 110 122 144 87 131 163 317 177 437 16 132 -90
+226 -240 214 -121 -10 -186 -64 -221 -186 -13 -44 -32 -101 -43 -125 -45 -102
+-144 -228 -220 -281 l-40 -27 -87 64 c-330 244 -526 269 -803 101 -42 -25
+-112 -73 -154 -105 l-77 -58 -59 43 c-111 82 -201 209 -247 346 -61 184 -198
+285 -323 237z m2324 -106 c116 -71 75 -289 -103 -538 -53 -75 -150 -183 -164
+-183 -5 0 -59 33 -119 74 l-111 73 56 43 c125 97 218 232 276 403 23 69 46
+119 60 130 28 22 66 22 105 -2z m-2198 -7 c29 -20 45 -52 80 -162 38 -117 89
+-208 163 -286 180 -193 467 -302 778 -295 82 2 91 0 144 -30 65 -37 101 -76
+133 -146 l24 -50 -33 -8 c-17 -5 -117 -9 -222 -10 -157 -1 -210 3 -305 21
+-274 51 -483 156 -646 324 -152 155 -259 365 -272 530 -4 64 -3 68 26 97 35
+36 92 42 130 15z m1125 -335 c43 -12 221 -126 785 -505 214 -144 407 -271 429
+-283 61 -31 135 -120 161 -193 l22 -63 0 -1616 0 -1616 -31 -61 c-37 -74 -88
+-115 -179 -143 -67 -21 -272 -23 -2295 -23 -130 0 -159 3 -214 23 -111 39
+-167 91 -204 188 l-22 58 3 1595 c2 1752 -1 1646 63 1744 40 60 150 148 277
+223 54 31 130 79 171 106 l75 50 30 -18 c131 -79 251 -130 379 -164 l72 -18 6
+-56 c17 -151 140 -267 318 -297 184 -31 375 64 447 223 24 53 28 76 28 152 1
+77 -3 98 -25 145 -36 74 -88 132 -154 170 -58 33 -170 57 -370 80 -111 13
+-201 32 -257 57 l-38 16 123 84 c211 146 288 173 400 142z m200 -774 c-9 -49
+-48 -128 -79 -159 -64 -64 -177 -84 -277 -50 -69 23 -141 93 -166 160 -12 30
+-21 60 -21 67 0 9 66 12 274 12 l275 0 -6 -30z" />
+                <path d="M3570 2851 c-51 -16 -94 -45 -175 -116 -111 -99 -217 -150 -510 -247
+-131 -43 -282 -99 -333 -123 -157 -74 -267 -165 -337 -277 -17 -27 -33 -48
+-38 -48 -19 0 -271 75 -337 101 -73 28 -100 46 -210 136 -61 51 -111 67 -162
+53 -75 -21 -119 -81 -137 -186 -6 -33 -18 -97 -26 -144 -76 -399 189 -858 563
+-977 150 -47 291 -40 449 23 l65 26 91 -30 c134 -45 212 -55 351 -49 146 7
+210 23 341 87 262 128 481 398 588 725 93 285 102 596 23 838 -40 124 -67 177
+-95 191 -37 19 -82 26 -111 17z m35 -114 c56 -133 89 -378 82 -607 -4 -152 -9
+-190 -35 -291 -52 -202 -128 -349 -248 -478 -240 -260 -608 -362 -877 -243
+-26 11 -47 24 -47 27 0 3 13 20 30 38 40 43 85 130 100 196 17 71 7 199 -20
+278 -43 123 -151 255 -255 309 l-54 29 26 45 c103 180 238 263 635 394 139 46
+284 97 321 114 92 42 191 110 252 171 27 28 55 51 63 51 7 0 19 -15 27 -33z
+m-1969 -603 c59 -33 145 -64 384 -138 144 -45 225 -91 318 -184 163 -161 203
+-373 105 -554 -82 -151 -280 -236 -448 -194 -191 48 -383 206 -470 385 -65
+135 -95 268 -95 423 0 89 22 270 40 338 l11 41 47 -41 c26 -23 74 -57 108 -76z" />
+            </g>
+        </symbol>
+        <symbol id="gamas" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        viewBox="0 0 512 512">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white" stroke="none">
+                <path d="M132 5109 c-46 -14 -109 -80 -122 -128 -7 -27 -10 -353 -8 -1043 l3
+-1003 24 -38 c13 -21 42 -50 64 -65 l41 -27 1026 0 1026 0 41 27 c22 15 51 44
+64 65 l24 38 0 1026 0 1025 -27 41 c-15 22 -44 51 -65 64 l-38 24 -1010 2
+c-620 1 -1023 -2 -1043 -8z m1788 -1149 l0 -760 -760 0 -760 0 0 760 0 760
+760 0 760 0 0 -760z" />
+                <path d="M2932 5109 c-46 -14 -109 -80 -122 -128 -7 -27 -10 -353 -8 -1043 l3
+-1003 24 -38 c13 -21 42 -50 64 -65 l41 -27 1026 0 1026 0 41 27 c22 15 51 44
+64 65 l24 38 0 1026 0 1025 -27 41 c-15 22 -44 51 -65 64 l-38 24 -1010 2
+c-620 1 -1023 -2 -1043 -8z m1788 -1149 l0 -760 -760 0 -760 0 0 760 0 760
+760 0 760 0 0 -760z" />
+                <path d="M132 2309 c-46 -14 -109 -80 -122 -128 -7 -27 -10 -353 -8 -1043 l3
+-1003 24 -38 c13 -21 42 -50 64 -65 l41 -27 1026 0 1026 0 41 27 c22 15 51 44
+64 65 l24 38 0 1026 0 1025 -27 41 c-15 22 -44 51 -65 64 l-38 24 -1010 2
+c-620 1 -1023 -2 -1043 -8z m1788 -1149 l0 -760 -760 0 -760 0 0 760 0 760
+760 0 760 0 0 -760z" />
+                <path d="M2932 2309 c-46 -14 -109 -80 -122 -128 -7 -27 -10 -353 -8 -1043 l3
+-1003 24 -38 c13 -21 42 -50 64 -65 l41 -27 1026 0 1026 0 41 27 c22 15 51 44
+64 65 l24 38 0 1026 0 1025 -27 41 c-15 22 -44 51 -65 64 l-38 24 -1010 2
+c-620 1 -1023 -2 -1043 -8z m1788 -1149 l0 -760 -760 0 -760 0 0 760 0 760
+760 0 760 0 0 -760z" />
+            </g>
+        </symbol>
+    </svg>
+
+    <p class="bg-dark my-0 py-4 text-center fw-bold fs-1 buttonAnimation"
+    style="letter-spacing: 3px; filter: brightness(1.5); color: white !important;">
+        BIENVENIDO Sr. ADMINISTRADOR.
+    </p>
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+        <a class="navbar-brand col-md-4 col-lg-3 me-0 px-3 fs-6 text-white" href="/Admin/users"
+        style="display: inline-flex; justify-content: center; align-items: center;">
+            <img src="img/LOGOTIPO01.png" alt="plantify.com" width="40px" height="40px" class="buttonAnimation me-3">
+            <span style="font-size: 1.5rem !important; font-weight: bold;">
+                Plantify.com
+            </span>
+        </a>
+
+        <ul class="navbar-nav flex-row d-md-none">
+            <li class="nav-item text-nowrap">
+                <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <svg class="bi">
+                        <use xlink:href="#list" />
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary"
+            style="border-top: none; margin-top: none;">
+                <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
+                aria-labelledby="sidebarMenuLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title buttonAnimation" id="sidebarMenuLabel"
+                        style="font-size: 1.5rem !important; font-weight: bold;">Plantify.com</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"
+                        aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body d-md-flex flex-column p-0 overflow-y-auto">
+                        <ul class="nav flex-column pt-3" style="overflow: hidden;">
+                            <li class="nav-item buttonAnimation">
+                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/Admin/users" @onclick="@(() => nameQuery = "Registros de toda la tabla USUARIOS")">
+                                    <svg class="bi">
+                                        <use xlink:href="#people" />
+                                    </svg>
+                                    USUARIOS.
+                                </a>
+                            </li>
+                            <li class="nav-item buttonAnimation">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/Admin/clientes" @onclick="@(() => nameQuery = "Registros de toda la tabla CLIENTES")">
+                                    <svg class="bi">
+                                        <use xlink:href="#clientes" />
+                                    </svg>
+                                    CLIENTES.
+                                </a>
+                            </li>
+                            <li class="nav-item buttonAnimation">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/Admin/pedidos" @onclick="@(() => nameQuery = "Registros de toda la tabla PEDIDOS")">
+                                    <svg class="bi">
+                                        <use xlink:href="#pedidos" />
+                                    </svg>
+                                    PEDIDOS.
+                                </a>
+                            </li>
+                            <li class="nav-item buttonAnimation">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/Admin/detalles" @onclick="@(() => nameQuery = "Registros de toda la tabla DETALLES DE PEDIDO")">
+                                    <svg class="bi">
+                                        <use xlink:href="#detalles" />
+                                    </svg>
+                                    DETALLES DE PEDIDO.
+                                </a>
+                            </li>
+                            <li class="nav-item buttonAnimation">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/Admin/productos" @onclick="@(() => nameQuery = "Registros de toda la tabla PRODUCTOS")">
+                                    <svg class="bi">
+                                        <use xlink:href="#productos" />
+                                    </svg>
+                                    PRODUCTOS.
+                                </a>
+                            </li>
+                            <li class="nav-item buttonAnimation">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/Admin/gamas" @onclick="@(() => nameQuery = "Registros de toda la tabla GAMA DE PRODUCTOS")">
+                                    <svg class="bi">
+                                        <use xlink:href="#gamas" />
+                                    </svg>
+                                    GAMA DE PRODUCTOS.
+                                </a>
+                            </li>
+                        </ul>
+
+                        <hr class="my-3">
+
+                        <ul class="nav flex-column mb-auto" style="overflow: hidden;">
+                            <li class="nav-item buttonAnimation" @onclick="Salir">
+                                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                                    <svg class="bi">
+                                        <use xlink:href="#door-closed" />
+                                    </svg>
+                                    SALIR.
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-4 mb-3 border-bottom">
+                    <h1 class="h2 text-success fw-bold text-center fs-1">
+                        Hola, aquí puedes hacer una consulta o ejecutar un
+                        procedimiento almacenado que necesites visualizar.</h1>
+                </div>
+
+                <div
+                class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-4 mb-3 border-bottom">
+                    <details>
+                        <summary class="h2 text-secondary fw-bold text-center fs-3">Consultas frecuentes y específicas por tabla y
+                            consultas multitabla. Analiza su descripción y solo da click en el botón para actualizar la tabla
+                            debajo...</summary>
+                        <div class="container text-center">
+                            <div class="row gap-2 pt-3 align-items-stretch justify-content-evenly row-gap-4">
+                                @switch (table)
+                                {
+                                    case "users":
+                                        <h2 class="h2 text-success fw-bold fs-1 text-center">
+                                            Ninguna consulta disponible por aquí...
+                                        </h2>
+                                        break;
+
+                                    case "clientes":
+                                        <a href="/Admin/clientes/6" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(() => asigNameQuery("Clientes de España (país Spain)"))">
+                                            Clientes de España (país 'Spain').
+                                        </a>
+
+                                        <a href="/Admin/clientes/10" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(() => asigNameQuery("Clientes de Madrid con representante 11 o 30"))">
+                                            Clientes de Madrid con representante 11 o 30.
+                                        </a>
+
+                                        <a href="/Admin/clientes/11" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Nombre de cliente y sus pedidos"))">
+                                            Nombre de cliente y sus pedidos.
+                                        </a>
+
+                                        <a href="/Admin/clientes/12" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes sin pedidos"))">
+                                            Clientes sin pedidos.
+                                        </a>
+
+                                        <a href="/Admin/clientes/16" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con entregas tardías"))">
+                                            Clientes con entregas tardías.
+                                        </a>
+
+                                        <a href="/Admin/clientes/18" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes sin pedidos"))">
+                                            Clientes sin pedidos.
+                                        </a>
+
+                                        <a href="/Admin/clientes/19" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con pedidos retrasados"))">
+                                            Clientes con pedidos retrasados.
+                                        </a>
+
+                                        <a href="/Admin/clientes/23" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con pedidos sin stock suficiente"))">
+                                            Clientes con pedidos sin stock suficiente.
+                                        </a>
+
+                                        <a href="/Admin/clientes/24" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Número de clientes por país"))">
+                                            Número de clientes por país.
+                                        </a>
+
+                                        <a href="/Admin/clientes/27" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Total de clientes"))">
+                                            Total de clientes.
+                                        </a>
+
+                                        <a href="/Admin/clientes/28" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes en Madrid"))">
+                                            Clientes en Madrid.
+                                        </a>
+
+                                        <a href="/Admin/clientes/29" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes por ciudad con M"))">
+                                            Clientes por ciudad con M.
+                                        </a>
+
+                                        <a href="/Admin/clientes/30" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con más de 5 productos diferentes en su último pedido"))">
+                                            Clientes con más de 5 productos diferentes en su último pedido.
+                                        </a>
+
+                                        <a href="/Admin/clientes/31" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Fecha primer y último pedido por cliente"))">
+                                            Fecha primer y último pedido por cliente.
+                                        </a>
+                                        break;
+
+                                    case "pedidos":
+                                        <a href="/Admin/pedidos/7" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Distintos estados de pedido"))">
+                                            Distintos estados de pedido.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/8" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Pedidos no entregados a tiempo"))">
+                                            Pedidos no entregados a tiempo.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/11" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Nombre de cliente y sus pedidos"))">
+                                            Nombre de cliente y sus pedidos.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/13" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con pedidos y detalle"))">
+                                            Clientes con pedidos y detalle.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/15" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Pedidos con proveedor y precio"))">
+                                            Pedidos con proveedor y precio.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/19" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con pedidos retrasados"))">
+                                            Clientes con pedidos retrasados.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/21" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Pedidos con cliente asociado"))">
+                                            Pedidos con cliente asociado.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/23" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con pedidos sin stock suficiente"))">
+                                            Clientes con pedidos sin stock suficiente.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/25" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Pedidos por estado"))">
+                                            Pedidos por estado.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/30" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Clientes con más de 5 productos diferentes en su último pedido"))">
+                                            Clientes con más de 5 productos diferentes en su último pedido.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/31" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Fecha primer y último pedido por cliente"))">
+                                            Fecha primer y último pedido por cliente.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/32" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery(" Productos diferentes por pedido"))">
+                                            Productos diferentes por pedido.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/33" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Cantidad total por pedido"))">
+                                            Cantidad total por pedido.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/34" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Top 20 productos más vendidos"))">
+                                            Top 20 productos más vendidos.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/35" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Facturación total"))">
+                                            Facturación total.
+                                        </a>
+
+                                        <a href="/Admin/pedidos/39" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration:none;" @onclick="@(()=>asigNameQuery("Total de pagos por año"))">
+                                            Total de pagos por año.
+                                        </a>
+                                        break;
+
+                                    case "detalles":
+                                        <a href="/Admin/detalles/13" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Clientes con pedidos y detalle"))">
+                                            Clientes con pedidos y detalle.
+                                        </a>
+                                        <a href="/Admin/detalles/17" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Gamas compradas por clientes"))">
+                                            Gamas compradas por clientes.
+                                        </a>
+                                        break;
+
+                                    case "productos":
+                                        <a href="/Admin/productos/9" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Productos de gama Ornamentales con más de 100 en stock"))">
+                                            Productos de gama Ornamentales con más de 100 en stock.
+                                        </a>
+                                        <a href="/Admin/productos/14" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("5 productos más comprados"))">
+                                            5 productos más comprados.
+                                        </a>
+                                        <a href="/Admin/productos/20" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Productos sin descripción"))">
+                                            Productos sin descripción.
+                                        </a>
+                                        <a href="/Admin/productos/22" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Productos que nunca han aparecido en pedidos"))">
+                                            Productos que nunca han aparecido en pedidos.
+                                        </a>
+                                        <a href="/Admin/productos/26" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Precio más caro y más barato"))">
+                                            Precio más caro y más barato.
+                                        </a>
+                                        <a href="/Admin/productos/34" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Top 20 productos más vendidos"))">
+                                            Top 20 productos más vendidos.
+                                        </a>
+                                        <a href="/Admin/productos/36" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Facturación por producto"))">
+                                            Facturación por producto.
+                                        </a>
+                                        <a href="/Admin/productos/37" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Facturación por producto (códigos 'OR')"))">
+                                            Facturación por producto (códigos 'OR').
+                                        </a>
+                                        <a href="/Admin/productos/38" class="btn btn-success buttonAnimation col-10 col-sm-5 col-xl-2 d-inline-flex align-items-center justify-content-center" style="text-decoration: none;" @onclick="@(()=>asigNameQuery("Productos con facturación > 3000€"))">
+                                            Productos con facturación > 3000€.
+                                        </a>
+                                        break;
+
+                                    case "gamas":
+                                        <h2 class="h2 text-success fw-bold text-center fs-1">
+                                            Ninguna consulta disponible por aquí...
+                                        </h2>
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <h2 class="text-primary fw-bold fs-4">Resultados de la consulta seleccionada de DB (@nameQuery):</h2>
+                <div class="table-responsive small rounded" style="max-height: 800px; overflow: auto;">
+                    <table class="table table-md table-bordered table-dark" style= "border-spacing: 6px;">
+                        <thead class="table-dark bg-success">
+                            <tr>
+                                @if (registrosQuery?.Any() == true)
+                                {
+                                    foreach (var key in registrosQuery[0].Keys.ToList())
+                                    {
+                                        <th class="fs-4 fw-bold text-success text-center" style="text-transform: uppercase; vertical-align: middle;">@key</th>
+                                    }
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (registrosQuery != null)
+                            {
+                                foreach (var row in registrosQuery)
+                                {
+                                    <tr>
+                                        @foreach (var val in row.Values)
+                                        {
+                                            <td class="text-center" style="vertical-align: middle;">
+                                                @{
+                                                    var strVal = val?.ToString();
+                                                    if (string.IsNullOrEmpty(strVal))
+                                                    {
+                                                        strVal = "null";
+                                                    }
+                                                }
+
+                                                @if (strVal != "null" && strVal.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                                                {
+                                                    <img src="img/producto/@strVal" alt="imagen" style="max-height: auto; max-width: 100%; border-radius: 15px;" />
+                                                }
+                                                else
+                                                {
+                                                    @strVal
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (errorMessage != null)
+                {
+                    <div class="alert alert-danger">@errorMessage</div>
+                }
+                <div style="height: 50px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COPIAR -->
+    <footer class="pt-4 mt-md-0 pt-md-5 border-top" style="text-align: center !important;">
+        <div class="row gap-3 justify-content-center">
+            <div class="col-12">
+                <img class="mb-2 buttonAnimation" src="img/LOGOTIPO01.png" alt="" width="50" height="auto"
+                style="display: block; margin: auto;">
+                <small class="d-block mb-3 text-body-secondary" style="color: black !important;">&copy; 2024–2025.</small>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-5">
+                <h5 style="font-weight: bold; font-style: italic; color: black !important;">Ubicación:</h5>
+                <br>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30131.850067408443!2d-99.01537359182484!3d19.261426710337172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce1cdb9988f43d%3A0x349f35ed189e88f2!2sInstituto%20Tecnol%C3%B3gico%20de%20Tl%C3%A1huac!5e0!3m2!1ses!2smx!4v1728171833008!5m2!1ses!2smx"
+                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        class="mapa"></iframe>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-3">
+                <h5 style="font-weight: bold; font-style: italic; color: black !important;">Información:</h5>
+                <br>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1">
+                        <p class="parrafo" style="color: black !important;">
+                            Dirección.<br>
+                            Av. Estanislao Ramírez Ruiz 301. Col. Ampliación Selene, Tláhuac, 13430, Ciudad de México.
+                            <br><br>
+                            <span style="font-weight: bold;">Contacto:</span><br>
+                            Teléfono: 55 8837-4683 | 55 6332-7245.<br>
+                            Opción 2:
+                            <span class="correo">
+                                <a href="mailto:firebase.proyect.library@gmail.com" class="buttonAnimation"
+                                style="color: #5a23c8;">Plantify.com</a>
+                            </span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-3">
+                <h5 style="font-weight: bold; font-style: italic; color: black !important;">Sobre Plantify.com:</h5>
+                <br>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1">
+                        <p class="parrafo" style="color: black !important;">
+                            Escríbenos un correo a: <br>
+                            <span class="correo">
+                                <a href="mailto:firebase.proyect.library@gmail.com" class="buttonAnimation"
+                                style="color: #5a23c8;">Plantify.com</a>
+                            </span>
+                            <br><br>
+                            <span style="font-weight: bold;">
+                                © Copyright 2025 Plantify.com.
+                                <br>
+                                Todos los Derechos Reservados.
+                            </span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<script src="js/bootstrap.bundle.min.js?v=@DateTime.Now.Ticks"></script>
+
+<script src="js/color-modes.js?v=@DateTime.Now.Ticks"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
+integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
+crossorigin="anonymous"></script>
+<script src="../js/dashboard.js?v=@DateTime.Now.Ticks"></script>
+
+@code {
+    [Parameter]
+    public string table { get; set; } = ""; 
+
+    [Parameter]
+    public string? idquery { get; set; } = null; 
+
+    private List<Dictionary<string, object>>? registrosQuery = new List<Dictionary<string, object>>();
+
+    public string nameQuery { get; set; } = "Registros de toda la tabla USUARIOS";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(idquery) && int.TryParse(idquery, out int idParsed))
+            {
+                registrosQuery = await queryService.GetQuery(idParsed);
+            }
+            else
+            {
+                switch (table)
+                {
+                    case "users":
+                        registrosQuery = await queryService.GetQuery(0);
+                        break;
+                    case "clientes":
+                        registrosQuery = await queryService.GetQuery(1);
+                        break;
+                    case "pedidos":
+                        registrosQuery = await queryService.GetQuery(2);
+                        break;
+                    case "detalles":
+                        registrosQuery = await queryService.GetQuery(3);
+                        break;
+                    case "productos":
+                        registrosQuery = await queryService.GetQuery(4);
+                        break;
+                    case "gamas":
+                        registrosQuery = await queryService.GetQuery(5);
+                        break;
+                    default:
+                        Console.WriteLine($"Tabla desconocida: {table}");
+                        break;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al ejecutar query: {ex.Message}");
+            errorMessage = $"Error cargando los datos: {ex.Message}";
+        }
+    }
+
+    private void asigNameQuery(string name) {
+        nameQuery = name;
+    }
+
+    private string? errorMessage;
+
+    private async Task Salir()
+    {
+        // Redirigir a la página principal u otra que prefieras...
+        NavigationManager.NavigateTo("/");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}

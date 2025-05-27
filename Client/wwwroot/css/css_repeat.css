@@ -1,0 +1,289 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.b-example-vr {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 100vh;
+}
+
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.btn-bd-primary {
+  --bd-violet-bg: #712cf9;
+  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: var(--bd-violet-bg);
+  --bs-btn-border-color: var(--bd-violet-bg);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #6528e0;
+  --bs-btn-hover-border-color: #6528e0;
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #5a23c8;
+  --bs-btn-active-border-color: #5a23c8;
+}
+
+.bd-mode-toggle {
+  z-index: 1500;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+  display: block !important;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 33%;
+  cursor: pointer;
+}
+
+/******************************************************************************************************* estilos de la página parte main. ******************************/
+
+.targets {
+  border-radius: 15px;
+}
+
+.gama {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-clip: border-box;
+  background-size: contain;
+}
+
+.gama:hover {
+  animation: focus2 0.5s ease-in-out forwards;
+}
+
+@keyframes focus2 {
+  0% {
+    transform: scale(1);
+    filter: brightness(0.5);
+  }
+
+  50% {
+    transform: scale(1.2);
+    filter: brightness(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.gama:active {
+  opacity: 0.2;
+}
+
+a.anclajeTarget {
+  text-decoration: none;
+  color: var(--theme-palette-color-border);
+}
+
+@media (min-width: 1000px) {
+  #lastGama {
+    width: 35% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-gama-targets {
+    margin-bottom: 20px;
+  }
+}
+
+.main-space-div {
+  padding-top: 56px;
+  /* Ajusta según el alto de tu navbar */
+}
+
+.bg-dark-cont {
+  background: linear-gradient(145deg, #1c1c1e, #2c2c2e);
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  color: white;
+  padding: 1.5rem;
+}
+
+.bg-icono-amarillo {
+  background-color: rgba(255, 193, 7, 0.2);
+  /* Amarillo translúcido */
+  border: 1px solid rgba(255, 193, 7, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 6px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-icono-verde {
+  background-color: rgba(40, 167, 69, 0.2);
+  /* Verde translúcido */
+  border: 1px solid rgba(40, 167, 69, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 6px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-icono-rojo {
+  background-color: rgba(220, 53, 69, 0.2);
+  /* Rojo translúcido */
+  border: 1px solid rgba(220, 53, 69, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 6px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-borrar {
+  background-color: rgba(220, 53, 69, 0.8);
+  /* Fondo rojo translúcido */
+  border: 1px solid rgba(220, 53, 69, 1);
+  /* Borde rojo */
+  border-radius: 50%;
+  /* Forma circular */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+}
+
+.btn-borrar:hover {
+  background-color: rgba(220, 53, 69, 1);
+  /* Fondo rojo sólido al hacer hover */
+  transform: scale(1.1);
+  /* Efecto de escala */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-borrar img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: invert(1);
+  /* Convierte el ícono a blanco */
+}
+
+.btn-borrar>a {
+  height: 100%;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.text-ped-con strong,
+span,
+a.aqui {
+  font-size: 1rem !important;
+  transition: all 0.5s ease-in-out;
+}
+
+@media (max-width: 550px) {
+
+  .text-ped-con strong,
+  span,
+  a.aqui {
+    font-size: 0.8rem !important;
+  }
+}
+
+.btn-borrar0 {
+      background-color: rgba(220, 53, 69, 0.8);
+      /* Fondo rojo translúcido */
+      border: 1px solid rgba(220, 53, 69, 1);
+      /* Borde rojo */
+      border-radius: 50%;
+      /* Forma circular */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 25px;
+      height: 25px;
+      box-sizing: content-box !important;
+    }
+
+    .btn-borrar0:hover {
+      background-color: rgba(220, 53, 69, 1);
+      /* Fondo rojo sólido al hacer hover */
+      transform: scale(1.1);
+      /* Efecto de escala */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-borrar0 img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      object-position: center;
+      filter: invert(1);
+      /* Convierte el ícono a blanco */
+    }
+
+    #enviarOrder:active {
+      background-color: transparent;
+    }

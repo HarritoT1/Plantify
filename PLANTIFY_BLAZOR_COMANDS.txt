@@ -1,0 +1,14 @@
+Creación del Context por medio de comandos.
+
+Scaffold-DbContext "Server=DESKTOP-A6PIOKC; DataBase=Jardineria; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models
+
+Scaffold-DbContext "Server=DESKTOP-A6PIOKC; DataBase=Jardineria; Trusted_Connection=False; User=sa; Password= 123789; TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models
+
+Scaffold-DbContext "Server=DESKTOP-A6PIOKC; DataBase=Jardineria; User=sa; Password= 123789; TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-A6PIOKC; DataBase=Jardineria; User=sa; Password= 123789; TrustServerCertificate=True;");

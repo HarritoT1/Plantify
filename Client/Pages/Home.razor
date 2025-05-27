@@ -1,0 +1,403 @@
+@page "/Home"
+  @using Plantify.Shared;
+  @using Plantify.Client.Services;
+  @using Microsoft.AspNetCore.Components.Forms;
+
+@inject ClienteGlobal clienteGlobal;
+@inject PedidoDTO pedidoDTOGlobal;
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="check2" viewBox="0 0 16 16">
+      <path
+        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+    </symbol>
+    <symbol id="circle-half" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+    </symbol>
+    <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+      <path
+        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+      <path
+        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+    </symbol>
+    <symbol id="sun-fill" viewBox="0 0 16 16">
+      <path
+        d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+    </symbol>
+  </svg>
+
+  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <button class="btn btn-outline-success buttonAnimation py-2 dropdown-toggle d-flex align-items-center" id="bd-theme"
+      type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+      <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+        <use href="#circle-half"></use>
+      </svg>
+      <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center buttonAnimation"
+          data-bs-theme-value="light" aria-pressed="false">
+          <svg class="bi me-2 opacity-50" width="1em" height="1em">
+            <use href="#sun-fill"></use>
+          </svg>
+          Light
+          <svg class="bi ms-auto d-none" width="1em" height="1em">
+            <use href="#check2"></use>
+          </svg>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center buttonAnimation" data-bs-theme-value="dark"
+          aria-pressed="false">
+          <svg class="bi me-2 opacity-50" width="1em" height="1em">
+            <use href="#moon-stars-fill"></use>
+          </svg>
+          Dark
+          <svg class="bi ms-auto d-none" width="1em" height="1em">
+            <use href="#check2"></use>
+          </svg>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center active buttonAnimation"
+          data-bs-theme-value="auto" aria-pressed="true">
+          <svg class="bi me-2 opacity-50" width="1em" height="1em">
+            <use href="#circle-half"></use>
+          </svg>
+          Auto
+          <svg class="bi ms-auto d-none" width="1em" height="1em">
+            <use href="#check2"></use>
+          </svg>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="aperture" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+      stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+    </symbol>
+    <symbol id="cart" viewBox="0 0 16 16">
+      <path
+        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+    <symbol id="chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+    </symbol>
+    <symbol id="mi-icono-pedidos" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      viewBox="0 0 512 512">
+      <g transform="translate(0,512) scale(0.1,-0.1)">
+        <path d="M602 5103 c-12 -10 -152 -295 -311 -633 l-291 -616 0 -1902 0 -1903
+25 -24 24 -25 2511 0 2511 0 24 25 25 24 0 451 0 451 -77 -3 -78 -3 -3 -393
+-2 -392 -965 0 -965 0 0 493 c-1 519 0 510 -47 535 -31 17 -815 17 -846 0 -47
+-25 -46 -16 -47 -535 l0 -493 -965 0 -965 0 0 1800 0 1800 300 0 300 0 0 75 0
+75 -280 0 c-154 0 -280 2 -280 4 0 2 112 239 248 527 l248 524 737 3 737 2 0
+-37 c0 -54 -70 -995 -75 -1010 -3 -10 -126 -13 -570 -13 l-565 0 0 -75 0 -75
+565 0 565 0 0 -494 0 -495 24 -28 24 -28 422 0 422 0 24 28 24 28 0 495 0 494
+965 0 965 0 0 -1305 0 -1305 80 0 80 0 0 1352 0 1352 -291 616 c-159 338 -299
+623 -311 633 -19 16 -127 17 -1958 17 -1831 0 -1939 -1 -1958 -17z m4070 -662
+c136 -288 248 -525 248 -527 0 -2 -425 -4 -945 -4 -748 0 -947 3 -950 13 -5
+15 -75 956 -75 1010 l0 37 737 -2 737 -3 248 -524z" />
+        <path d="M3259 3371 l-29 -29 0 -547 0 -547 29 -29 30 -29 706 2 707 3 19 24
+c18 22 19 47 19 576 0 529 -1 554 -19 576 l-19 24 -707 3 -706 2 -30 -29z
+m1331 -576 l0 -445 -600 0 -600 0 0 445 0 445 600 0 600 0 0 -445z" />
+        <path d="M3552 3027 c-27 -29 -28 -67 -3 -98 l19 -24 415 -3 415 -3 28 24 c35
+31 38 82 5 109 -22 17 -50 18 -440 18 l-418 0 -21 -23z" />
+        <path d="M3555 2665 c-32 -31 -33 -74 -2 -103 23 -22 26 -22 436 -22 271 0
+419 4 432 11 46 24 42 105 -7 128 -17 8 -149 11 -430 11 l-405 0 -24 -25z" />
+        <path d="M546 1531 c-140 -139 -150 -152 -150 -187 0 -44 31 -74 77 -74 26 0
+45 14 104 72 l73 72 0 -315 0 -316 23 -21 c25 -23 66 -28 97 -12 35 19 40 64
+40 363 l0 290 69 -66 c58 -56 75 -67 103 -67 43 0 78 34 78 76 0 25 -24 54
+-153 182 -126 125 -159 152 -182 152 -24 0 -56 -27 -179 -149z" />
+        <path d="M1317 1543 c-158 -157 -174 -181 -156 -224 14 -34 36 -49 76 -49 21
+0 45 17 100 72 l73 72 0 -315 0 -316 23 -21 c25 -23 66 -28 97 -12 35 19 40
+64 40 363 l0 290 69 -66 c58 -56 75 -67 103 -67 43 0 78 34 78 76 0 25 -24 54
+-153 182 -126 125 -159 152 -182 152 -23 0 -54 -26 -168 -137z" />
+        <path d="M426 609 c-26 -20 -34 -57 -20 -94 17 -44 26 -45 701 -45 494 0 644
+3 663 13 36 18 53 58 40 93 -21 56 7 53 -701 54 -649 0 -657 0 -683 -21z" />
+
+      </g>
+    </symbol>
+    <symbol id="mi-icono-salida" viewBox="0 0 512 512">
+      <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+        <path d="M3368 4883 c-14 -9 -31 -27 -37 -40 -7 -15 -11 -125 -11 -303 l0
+-280 -771 -2 -771 -3 -29 -33 -29 -32 0 -213 c0 -237 4 -251 63 -280 36 -18
+38 -18 74 0 57 27 63 48 63 216 l0 147 700 0 700 0 0 -1500 0 -1500 -700 0
+-699 0 -3 386 -3 386 -34 30 c-28 25 -39 29 -70 24 -23 -3 -46 -17 -63 -36
+l-28 -30 0 -445 0 -445 29 -32 29 -33 771 -3 771 -2 0 -280 c0 -179 4 -288 11
+-303 12 -28 58 -57 88 -57 16 0 1536 602 1642 650 14 6 33 24 42 40 16 26 17
+155 17 1650 0 1495 -1 1624 -17 1650 -9 16 -28 34 -42 40 -115 52 -1626 650
+-1644 650 -12 0 -34 -8 -49 -17z m852 -511 l695 -278 0 -1534 0 -1534 -145
+-58 c-79 -32 -145 -58 -147 -58 -1 0 -4 162 -5 360 l-3 360 -27 26 c-37 37
+-99 37 -136 0 l-27 -26 -5 -402 -5 -402 -445 -178 c-245 -98 -446 -178 -447
+-178 -2 0 -3 448 -3 995 l0 995 260 0 c143 0 260 -4 260 -8 0 -4 -18 -25 -40
+-47 -47 -46 -57 -82 -35 -128 25 -53 80 -71 133 -43 44 23 280 268 287 299 4
+15 4 39 0 54 -8 35 -245 276 -293 299 -78 37 -163 -39 -133 -119 6 -14 27 -44
+47 -66 l36 -41 -261 0 -261 0 0 995 c0 547 1 995 3 995 1 0 315 -125 697 -278z" />
+        <path d="M4495 2083 c-53 -13 -89 -87 -65 -134 53 -103 207 -57 186 55 -10 54
+-67 91 -121 79z" />
+        <path d="M1785 3461 c-64 -27 -81 -110 -32 -158 60 -61 162 -19 162 67 0 66
+-72 116 -130 91z" />
+        <path d="M64 2970 c-12 -4 -31 -21 -43 -36 -21 -26 -21 -34 -21 -375 l0 -349
+29 -32 29 -33 213 -3 c232 -3 260 1 284 49 18 34 19 60 3 94 -21 47 -53 55
+-213 55 l-145 0 0 60 0 60 125 0 c165 0 205 19 205 100 0 81 -40 100 -205 100
+l-125 0 0 60 0 60 145 0 c160 0 192 8 213 55 15 33 15 57 0 90 -22 50 -49 55
+-270 54 -112 0 -213 -4 -224 -9z" />
+        <path d="M894 2971 c-32 -14 -54 -51 -54 -92 0 -30 17 -61 95 -173 52 -75 95
+-141 95 -146 0 -5 -43 -71 -95 -146 -80 -114 -95 -143 -95 -175 0 -58 36 -94
+93 -94 24 0 52 6 61 14 10 8 50 61 89 118 39 57 73 103 76 103 3 0 35 -44 71
+-96 73 -108 110 -144 146 -144 57 0 104 47 104 105 0 21 -139 242 -188 298
+-14 15 -14 19 0 35 50 57 188 276 188 298 0 64 -58 113 -119 99 -35 -8 -65
+-40 -141 -153 -30 -45 -58 -81 -61 -82 -3 0 -37 46 -76 103 -39 57 -78 109
+-86 116 -20 16 -77 23 -103 12z" />
+        <path d="M1784 2970 c-12 -4 -31 -21 -43 -36 -21 -26 -21 -35 -21 -366 l0
+-340 34 -34 c46 -46 86 -46 132 0 l35 35 -3 346 -3 347 -33 29 c-33 29 -60 35
+-98 19z" />
+        <path d="M2210 2967 c-14 -7 -33 -29 -43 -50 -18 -36 -18 -38 0 -74 21 -45 53
+-63 111 -63 l42 0 0 -287 c0 -258 2 -290 18 -309 41 -52 109 -55 153 -8 l24
+26 3 289 3 289 39 0 c71 0 120 41 120 100 0 33 -26 75 -55 88 -37 17 -381 16
+-415 -1z" />
+      </g>
+    </symbol>
+  </svg>
+
+<nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark" style="box-sizing: border-box !important; max-width: 100% !important">
+    <div class="container">
+      <a class="navbar-brand d-md-none buttonAnimation" href="/Home">
+        <svg class="bi" width="24" height="24">
+          <use xlink:href="#aperture" />
+        </svg>
+        Ménu ⇨
+      </a>
+      <button class="navbar-toggler buttonAnimation" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+        aria-controls="offcanvas" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasLabel">Ménu...</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav flex-grow-1 justify-content-evenly">
+                    <li class="nav-item">
+              <a class="nav-link buttonAnimation" href="/Home" style="place-content: center;">
+                <svg class="bi" width="24" height="24">
+                  <use xlink:href="#aperture" />
+                </svg>
+                <span style="font-weight: 600; margin-left: 10px;">Inicio.</span>
+              </a></li>
+                    <li class="nav-item">
+                        <a class="nav-link buttonAnimation" href="/List_Pedidos" style="place-content: center;">
+                <svg class="bi" width="24" height="24">
+                  <use xlink:href="#mi-icono-pedidos" />
+                </svg>
+                <span style="font-weight: 600; margin-left: 10px;">Pedidos.</span>
+              </a></li>
+                    <li class="nav-item">
+                        <a class="nav-link buttonAnimation" href="/Pedido_Carrito" style="place-content: center;">
+                <svg class="bi" width="24" height="24">
+                  <use xlink:href="#cart" />
+                </svg>
+                <span style="font-weight: 600; margin-left: 10px;">Carrito.</span>
+              </a></li>
+                    <li class="nav-item">
+                        <a class="nav-link buttonAnimation" href="#" @onclick="Salir" style="place-content: center;">
+                <svg class="bi" width="24" height="24">
+                  <use xlink:href="#mi-icono-salida" />
+                </svg>
+                <span style="font-weight: 600; margin-left: 10px;">Salir.</span>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HASTA AQUÍ COPIAR -->
+
+  <div>
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary targets container-gama-targets">
+      <div class="col-md-6 p-lg-5 mx-auto my-5">
+        <h1 class="display-3 fw-bold fs-1">¡Bienvenido @clienteGlobal.Cliente?.NombreCliente Checa nuestras gamas de productos!</h1>
+        <h3 class="fw-normal text-muted mb-3 fs-3">Contamos con varios productos en nuestra tienda online.</h3>
+        <div class="d-flex gap-3 justify-content-center lead fw-normal">
+                <a class="icon-link buttonAnimation fs-4" href="/Pedido_Carrito">
+            Mi pedido actual
+            <svg class="bi">
+              <use xlink:href="#chevron-right" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="product-device shadow-sm d-none d-md-block"></div>
+      <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3 container-gama-targets">
+      <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden targets container-gama-targets">
+        <div class="my-3 py-3">
+                <a href="/Album/Herbaceas" class="anclajeTarget buttonAnimation">
+            <h2 class="display-5 fs-2">Plantas herbaceas.</h2>
+            <p class="lead">Plantas para jardin decorativas.</p>
+          </a>
+        </div>
+            <a href="/Album/Herbaceas">
+          <div class="bg-body-tertiary shadow-sm mx-auto gama"
+            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; background-image: url(img/herbaceas_gama.jpg);">
+          </div>
+        </a>
+      </div>
+      <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden targets">
+        <div class="my-3 p-3">
+          <a href="/Album/Herramientas" class="anclajeTarget buttonAnimation">
+            <h2 class="display-5 fs-2">Herramientas.</h2>
+            <p class="lead">Herramientas para todo tipo de acción.</p>
+          </a>
+        </div>
+        <a href="/Album/Herramientas">
+          <div class="bg-dark shadow-sm mx-auto gama"
+            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; background-image: url(img/tools.webp);">
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3 container-gama-targets">
+      <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden targets container-gama-targets">
+        <div class="my-3 p-3">
+          <a href="/Album/Aromáticas" class="anclajeTarget buttonAnimation">
+            <h2 class="display-5 fs-2">Aromáticas.</h2>
+            <p class="lead">Plantas aromáticas.</p>
+          </a>
+        </div>
+        <a href="/Album/Aromáticas">
+          <div class="bg-dark shadow-sm mx-auto gama"
+            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; background-image: url(img/aromaticas.jpg);">
+          </div>
+        </a>
+      </div>
+      <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden targets">
+        <div class="my-3 py-3">
+        <a href="/Album/Frutales" class="anclajeTarget buttonAnimation">
+            <h2 class="display-5 fs-2">Frutales.</h2>
+            <p class="lead">Árboles pequeños de producción frutal.</p>
+          </a>
+        </div>
+        <a href="/Album/Frutales">
+          <div class="bg-body-tertiary shadow-sm mx-auto gama"
+            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; background-image: url(img/frutal.jpg);">
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+      <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden targets">
+        <div class="my-3 py-3">
+          <a href="/Album/Ornamentales" class="anclajeTarget buttonAnimation">
+            <h2 class="display-5 fs-2">Ornamentales.</h2>
+            <p class="lead">Plantas vistosas para la decoración del jardín.</p>
+          </a>
+        </div>
+        <a href="/Album/Ornamentales">
+          <div class="bg-body-tertiary shadow-sm mx-auto gama"
+            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0; background-image: url(img/ornamental.jpg);" id="lastGama">
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COPIAR -->
+<footer class="pt-4 mt-md-0 pt-md-5 border-top" style="text-align: center !important;">
+    <div class="row gap-3 justify-content-center">
+        <div class="col-12">
+            <img class="mb-2 buttonAnimation" src="img/LOGOTIPO01.png" alt="" width="50" height="auto"
+                 style="display: block; margin: auto;">
+            <small class="d-block mb-3 text-body-secondary" style="color: black !important;">&copy; 2024–2025.</small>
+        </div>
+
+        <div class="col-12 col-md-5 col-lg-5">
+            <h5 style="font-weight: bold; font-style: italic; color: black !important;">Ubicación:</h5>
+            <br>
+            <ul class="list-unstyled text-small">
+                <li class="mb-1">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30131.850067408443!2d-99.01537359182484!3d19.261426710337172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce1cdb9988f43d%3A0x349f35ed189e88f2!2sInstituto%20Tecnol%C3%B3gico%20de%20Tl%C3%A1huac!5e0!3m2!1ses!2smx!4v1728171833008!5m2!1ses!2smx"
+                            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            class="mapa"></iframe>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-12 col-md-5 col-lg-3">
+            <h5 style="font-weight: bold; font-style: italic; color: black !important;">Información:</h5>
+            <br>
+            <ul class="list-unstyled text-small">
+                <li class="mb-1">
+                    <p class="parrafo" style="color: black !important;">
+                        Dirección.<br>
+                        Av. Estanislao Ramírez Ruiz 301. Col. Ampliación Selene, Tláhuac, 13430, Ciudad de México.
+                        <br><br>
+                        <span style="font-weight: bold;">Contacto:</span><br>
+                        Teléfono: 55 8837-4683 | 55 6332-7245.<br>
+                        Opción 2:
+                        <span class="correo">
+                            <a href="mailto:firebase.proyect.library@gmail.com" class="buttonAnimation"
+                               style="color: #5a23c8;">Plantify.com</a>
+                        </span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-12 col-md-5 col-lg-3">
+            <h5 style="font-weight: bold; font-style: italic; color: black !important;">Sobre Plantify.com:</h5>
+            <br>
+            <ul class="list-unstyled text-small">
+                <li class="mb-1">
+                    <p class="parrafo" style="color: black !important;">
+                        Escríbenos un correo a: <br>
+                        <span class="correo">
+                            <a href="mailto:firebase.proyect.library@gmail.com" class="buttonAnimation"
+                               style="color: #5a23c8;">Plantify.com</a>
+                        </span>
+                        <br><br>
+                        <span style="font-weight: bold;">
+                            © Copyright 2025 Plantify.com.
+                            <br>
+                            Todos los Derechos Reservados.
+                        </span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+  <!-- HASTA AQUÍ COPIAR -->
+
+<script src="js/bootstrap.bundle.min.js?v=@DateTime.Now.Ticks"></script>
+
+<script src="js/color-modes.js?v=@DateTime.Now.Ticks"></script>
+
+@code {
+    private async Task Salir()
+    {
+        // Limpiar cliente global o datos de sesión temporales...
+        clienteGlobal.Cliente = null;
+        // También puedes limpiar otros datos como:
+        pedidoDTOGlobal = new PedidoDTO(); // si quieres reiniciar todo...
+
+        // Redirigir a la página principal u otra que prefieras
+        NavigationManager.NavigateTo("/");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}

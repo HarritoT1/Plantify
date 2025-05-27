@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+    --theme-palette-color-border: #118f00;
+    --theme-palette-color-navbar: #a2e700;
+    --theme-palette-color-box-shadow: #020202;
+    --theme-palette-color-font: #ffffff;
+    --theme-palette-color-1: #000000;
+    --main-color: linear-gradient(to right, #118f00 0%, #6ecf00 30%, #b3ff00 60%);
+    --familyFont: 'DM Sans', sans-serif !important;
+}
+
+html {
+    font-size: 20px !important;
+}
+
+@media (max-width: 575px) {
+    html {
+        font-size: 8px;
+    }
+}
+
+@media (min-width: 576px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1400px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+body {
+    background-image: var(--main-color);
+    -webkit-box-shadow: inset 0px 3px 156px -10px var(--theme-palette-color-box-shadow);
+    -moz-box-shadow: inset 0px 3px 156px -10px var(--theme-palette-color-box-shadow);
+    box-shadow: inset 0px 3px 156px -10px var(--theme-palette-color-box-shadow);
+    font-family: var(--familyFont);
+    box-sizing: border-box !important;
+    padding-right: 0px !important;
+
+}
+
+iframe.mapa {
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: var(--theme-palette-color-border);
+    -webkit-box-shadow: -1px 0px 5px 7px var(--theme-palette-color-box-shadow);
+    -moz-box-shadow: -1px 0px 5px 7px 12px var(--theme-palette-color-box-shadow);
+    box-shadow: -1px 0px 5px 7px var(--theme-palette-color-box-shadow);
+}
+
+.parrafo {
+    font-size: 1rem;
+}
+
+.correo {
+    font-size: 1rem;
+}
+
+footer {
+    background: var(--theme-palette-color-navbar);
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 0 20px;
+    padding-bottom: 30px;
+    -webkit-box-shadow: 1px -14px 35px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px -14px 35px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px -14px 35px -3px rgba(0, 0, 0, 0.75);
+}
+
+/*AQUÍ TERMINA ESTILOS DE HEADER y FOOTER.*/
+
+* {
+    font-family: var(--familyFont) !important;
+    box-sizing: border-box !important;
+    font-size: 1rem !important; 
+}
+
+@keyframes focus {
+    0% {
+        transform: scale(1);
+        filter: brightness(0.5);
+    }
+
+    50% {
+        transform: scale(1.2);
+        color: var(--theme-palette-color-border);
+        filter: brightness(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+.buttonAnimation:link {
+    color: white;
+    transition: all 0.3s ease-in-out;
+    filter: blur(0px);
+    padding: 5px;
+}
+
+.buttonAnimation:active {
+    filter: blur(2px);
+    background-color: #118f00;
+    color: white !important;
+    border-radius: 80px;
+}
+
+.buttonAnimation:hover {
+    animation: focus 0.5s ease-in-out forwards;
+}
