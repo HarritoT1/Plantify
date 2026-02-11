@@ -8,7 +8,7 @@ namespace Plantify.Server.Controllers
     [Route("api/[controller]")]
     public class QueryController : ControllerBase
     {
-        private readonly string connectionString = "TrustServerCertificate=True; SERVER=DESKTOP-A6PIOKC; DATABASE=Jardineria; USER=sa; PASSWORD=123789;";
+        private readonly string connectionString = "TrustServerCertificate=True; SERVER=localhost; DATABASE=Jardineria; USER=sa; PASSWORD=Pelambres0M;";
 
         // Lista de queries o procedimientos almacenados
         private readonly List<string> Querys = new()
