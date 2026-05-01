@@ -165,8 +165,6 @@ Aplicación funcional desarrollada con fines académicos, orientada a demostrar 
 
 <p align="center">
   <img src="Screenshots/login.png" width="500" alt="Pantalla de inicio de sesión">
-  &nbsp;&nbsp;&nbsp;
-  <img src="Screenshots/footer.png" width="500" alt="Pie de página">
 </p>
 
 ## Cliente
