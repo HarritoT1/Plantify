@@ -164,30 +164,67 @@ Aplicación funcional desarrollada con fines académicos, orientada a demostrar 
 ### Autenticación
 
 <p align="center">
-  <img src="docs/screenshots/login.png" width="500" alt="Pantalla de inicio de sesión">
+  <img src="Screenshots/login.png" width="500" alt="Pantalla de inicio de sesión">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/footer.png" width="500" alt="Pie de página">
+</p>
+
+## Cliente
+
+### Dashboard
+
+<p align="center">
+  <img src="Screenshots/dashboard_client.png" width="500" alt="Dashboard del cliente">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/barra_nav.png" width="500" alt="Barra de navegación">
 </p>
 
 ### Catálogo de productos
 
 <p align="center">
-  <img src="docs/screenshots/catalogo.png" width="500" alt="Vista de catálogo de productos">
+  <img src="Screenshots/productos.png" width="500" alt="Productos">
 </p>
 
 ### Carrito de compras
 
 <p align="center">
-  <img src="docs/screenshots/carrito.png" width="500" alt="Carrito de compras con productos agregados">
+  <img src="Screenshots/carrito.png" width="500" alt="Carrito de compras con productos agregados">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/pedido_hecho.png" width="500" alt="Pedido hecho">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/pedido_creado.png" width="500" alt="Pedido creado">
 </p>
 
 ### Gestión de pedidos
 
 <p align="center">
-  <img src="docs/screenshots/pedidos.png" width="500" alt="Listado de pedidos del usuario">
+  <img src="Screenshots/historial.png" width="500" alt="Listado de pedidos del usuario">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/detalle_pedido.png" width="500" alt="Pedido hecho">
+</p>
+
+## Cliente
+
+### Dashboard
+
+<p align="center">
+  <img src="Screenshots/dashboard_admin.png" width="500" alt="Dashboard del admin">
+</p>
+
+### Consultas del administrador
+
+<p align="center">
+  <img src="Screenshots/datas.png" width="500" alt="Herramientas">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/options.png" width="500" alt="Consultas">
+  &nbsp;&nbsp;&nbsp;
+  <img src="Screenshots/query.png" width="500" alt="Consulta específica">
 </p>
 
 ---
 
 ## Autor
 
-Harol Gael Cardenas Trejo
-Ingeniería en Sistemas Computacionales
+Desarrollado por Ing. Harol Gael Cardenas Trejo Ingeniería en Sistemas Computacionales
+
+
