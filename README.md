@@ -167,9 +167,7 @@ Aplicación funcional desarrollada con fines académicos, orientada a demostrar 
   <img src="Screenshots/login.png" width="500" alt="Pantalla de inicio de sesión">
 </p>
 
-## Cliente
-
-### Dashboard
+### Dashboard del cliente
 
 <p align="center">
   <img src="Screenshots/dashboard_client.png" width="500" alt="Dashboard del cliente">
@@ -201,9 +199,7 @@ Aplicación funcional desarrollada con fines académicos, orientada a demostrar 
   <img src="Screenshots/detalle_pedido.png" width="500" alt="Pedido hecho">
 </p>
 
-## Cliente
-
-### Dashboard
+### Dashboard del administrador
 
 <p align="center">
   <img src="Screenshots/dashboard_admin.png" width="500" alt="Dashboard del admin">
